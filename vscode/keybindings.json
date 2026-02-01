@@ -1,6 +1,6 @@
 [
     {
         "key": "ctrl+shift+t",
-        "command": "workbench.action.createTerminalEditor",
+        "command": "workbench.action.createTerminalEditor"
     }
 ]
