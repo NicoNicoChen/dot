@@ -73,6 +73,13 @@ main() {
 		link_file "$dotdir/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
 	fi
 
+        # ghostty
+	if [ "$os" = "macOS" ]; then
+		link_file "$dotdir/ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+	else
+		link_file "$dotdir/ghostty/config" "$HOME/.config/ghostty/config"
+	fi
+
 }
 
 main
