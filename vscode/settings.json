@@ -32,7 +32,6 @@
     "git.decorations.enabled": false,
     "git.countBadge": "off",
     "window.zoomLevel": -0.65,
-    "workbench.colorTheme": "Solarized Dark",
     "workbench.enableExperiments": false,
     "workbench.reduceMotion": "on",
     "workbench.editor.enablePreview": false,
