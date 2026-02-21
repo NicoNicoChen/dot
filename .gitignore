@@ -1,0 +1,12 @@
+*.xlsx
+*.xls
+*.pptx
+*.ppt
+*.docx
+*.doc
+*.csv
+.env
+.env.*
+node_modules/
+.npm
+.cache
