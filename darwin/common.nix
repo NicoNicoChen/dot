@@ -34,6 +34,7 @@
         autohide-delay = 0.48;
         show-recents = false;
         orientation = "right";
+        tilesize = 16;
         persistent-apps = [ ];
       };
       finder = {
