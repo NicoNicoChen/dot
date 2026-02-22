@@ -65,19 +65,19 @@ main() {
 	os=$(detect_os)
 
 	# Neovim
-	link_file "$dotdir/config/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+	link_file "$dotdir/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 
 	# VSCode
 	if [ "$os" = "macOS" ]; then
-		link_file "$dotdir/config/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
-		link_file "$dotdir/config/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
+		link_file "$dotdir/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+		link_file "$dotdir/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
 	else
-		link_file "$dotdir/config/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
-		link_file "$dotdir/config/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
+		link_file "$dotdir/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
+		link_file "$dotdir/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
 	fi
 
 	# WezTerm
-	link_file "$dotdir/config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
+	link_file "$dotdir/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
 
 }
 
