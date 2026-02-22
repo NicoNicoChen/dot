@@ -19,6 +19,7 @@ end
 config.font = wezterm.font_with_fallback({
 	{ family = "JetBrainsMono Nerd Font", weight = "Bold" },
 	"Sarasa Term TC",
+	"Monaco",
 	"Microsoft JhengHei",
 	"Noto Sans TC",
 	"PingFang TC",
