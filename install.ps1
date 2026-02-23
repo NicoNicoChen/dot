@@ -64,9 +64,6 @@ function Main {
         # VSCode
         (Join-Path (Join-Path $DotDir "vscode") "settings.json") = (Join-Path (Join-Path (Join-Path $env:APPDATA "Code") "User") "settings.json")
         (Join-Path (Join-Path $DotDir "vscode") "keybindings.json") = (Join-Path (Join-Path (Join-Path $env:APPDATA "Code") "User") "keybindings.json")
-
-        # WezTerm
-        (Join-Path (Join-Path $DotDir "wezterm") "wezterm.lua") = (Join-Path (Join-Path (Join-Path $env:USERPROFILE ".config") "wezterm") "wezterm.lua")
 	
         # wt
         (Join-Path (Join-Path $DotDir "wt") "settings.json") = (Join-Path (Join-Path (Join-Path (Join-Path $env:LOCALAPPDATA "Packages") "Microsoft.WindowsTerminal_8wekyb3d8bbwe") "LocalState") "settings.json")
