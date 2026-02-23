@@ -76,9 +76,6 @@ main() {
 		link_file "$dotdir/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
 	fi
 
-	# WezTerm
-	link_file "$dotdir/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
-
 }
 
 main
