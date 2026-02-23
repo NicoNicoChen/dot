@@ -64,8 +64,21 @@ main() {
 
 	os=$(detect_os)
 
+	# Terminal.app
+	if [ "$os" = "macOS" ]; then
+		defaults import com.apple.Terminal "$HOME/dot/AppleTerminal/com.apple.Terminal.plist"
+		echo "Terminal.app preferences imported."
+	fi
+
+	# Emacs
+	link_file "$dotdir/emacs/early-init.el" "$HOME/.config/emacs/early-init.el"
+	link_file "$dotdir/emacs/init.el" "$HOME/.config/emacs/init.el"
+
 	# Neovim
 	link_file "$dotdir/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+
+	# Vim
+	link_file "$dotdir/vim/init.vim" "$HOME/.vim/vimrc"
 
 	# VSCode
 	if [ "$os" = "macOS" ]; then
