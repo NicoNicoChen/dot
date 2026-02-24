@@ -1,6 +1,7 @@
 " OPTION
 set autoread
 set autowrite
+set background=dark
 set clipboard^=unnamed,unnamedplus
 set number
 set cursorline
