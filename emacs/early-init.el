@@ -44,14 +44,14 @@
   "Setup fonts."
   (require 'cl-lib)
   (when (display-graphic-p)
-    (cl-loop for font in '("JetbrainsMono Nerd Font" "Monaco" "Consolas")
+    (cl-loop for font in '("Maple Mono NF" "JetbrainsMono Nerd Font" "Monaco" "Consolas")
              when (find-font (font-spec :name font))
              return (set-face-attribute 'default nil
                                         :family font
                                         :height (cond ((eq system-type 'windows-nt) 110)
                                                       ((eq system-type 'darwin) 130)
                                                       (t 100))))
-    (cl-loop for font in '("JetbrainsMono Nerd Font" "SF Mono" "Menlo" "SF Pro Display" "Helvetica")
+    (cl-loop for font in '("Maple Mono NF" "JetbrainsMono Nerd Font" "SF Mono" "Menlo" "SF Pro Display" "Helvetica")
              when (find-font (font-spec :name font))
              return (progn
                       (set-face-attribute 'mode-line nil :family font :height 100)
