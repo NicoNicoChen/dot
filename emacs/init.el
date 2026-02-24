@@ -26,6 +26,16 @@
 	  ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
 	  ("nongnu" . "https://elpa.nongnu.org/nongnu/"))))
 
+(use-package emacs
+  :ensure nil
+  :config
+  (setq-default tab-width 2))
+
+(use-package simple
+  :ensure nil
+  :config
+  (setq-default indent-tabs-mode nil))
+
 (use-package cus-edit
   :ensure nil
   :init
@@ -194,5 +204,8 @@
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-nonexclusive)
   (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-nonexclusive))
+
+(use-package xclip
+  :hook (after-init . xclip-mode))
 
 ;;; init.el ends here
