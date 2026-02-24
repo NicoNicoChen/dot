@@ -28,6 +28,7 @@
 (setq read-process-output-max (* 4 1024 1024))
 (setq process-adative-read-buffering nil)
 (setq native-comp-jit-compilation nil)
+(setq cus-edit (expand-file-name "custom.el" user-emacs-directory))
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
@@ -38,6 +39,38 @@
 (when (featurep 'ns)
   (setq ns-command-modifier 'meta)
   (setq ns-alternate-modifier 'super))
+
+(defun setup-fonts ()
+  "Setup fonts."
+  (require 'cl-lib)
+  (when (display-graphic-p)
+    (cl-loop for font in '("JetbrainsMono Nerd Font" "Monaco" "Consolas")
+             when (find-font (font-spec :name font))
+             return (set-face-attribute 'default nil
+                                        :family font
+                                        :height (cond ((eq system-type 'windows-nt) 110)
+                                                      ((eq system-type 'darwin) 130)
+                                                      (t 100))))
+    (cl-loop for font in '("JetbrainsMono Nerd Font" "SF Mono" "Menlo" "SF Pro Display" "Helvetica")
+             when (find-font (font-spec :name font))
+             return (progn
+                      (set-face-attribute 'mode-line nil :family font :height 100)
+                      (when (facep 'mode-line-active)
+                        (set-face-attribute 'mode-line-active nil :family font :height 100))
+                      (set-face-attribute 'mode-line-inactive nil :family font :height 100)))
+    (cl-loop for font in '("Apple Symbols" "Segoe UI Symbol" "Symbola" "Symbol")
+             when (find-font (font-spec :name font))
+             return (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend))
+    (cl-loop for font in '("Noto Color Emoji" "Apple Color Emoji" "Segoe UI Emoji")
+             when (find-font (font-spec :name font))
+             return (set-fontset-font t 'emoji (font-spec :family font) nil 'prepend))
+    (cl-loop for font in '("LXGW Neo Xihei" "LXGW WenKai Mono" "WenQuanYi Micro Hei Mono" "PingFang SC" "Microsoft Yahei UI" "Simhei")
+             when (find-font (font-spec :name font))
+             return (progn
+                      (setq face-font-rescale-alist `((,font . 1.3)))
+                      (set-fontset-font t 'han (font-spec :family font))))))
+(add-hook 'window-setup-hook #'setup-fonts)
+(add-hook 'server-after-make-frame-hook #'setup-fonts)
 
 (provide 'early-init)
 ;;; early-init.el ends here
