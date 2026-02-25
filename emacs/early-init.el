@@ -54,10 +54,10 @@
     (cl-loop for font in '("Maple Mono NF" "JetbrainsMono Nerd Font" "SF Mono" "Menlo" "SF Pro Display" "Helvetica")
              when (find-font (font-spec :name font))
              return (progn
-                      (set-face-attribute 'mode-line nil :family font :height 100)
+                      (set-face-attribute 'mode-line nil :family font :height 110)
                       (when (facep 'mode-line-active)
-                        (set-face-attribute 'mode-line-active nil :family font :height 100))
-                      (set-face-attribute 'mode-line-inactive nil :family font :height 100)))
+                        (set-face-attribute 'mode-line-active nil :family font :height 110))
+                      (set-face-attribute 'mode-line-inactive nil :family font :height 110)))
     (cl-loop for font in '("Apple Symbols" "Segoe UI Symbol" "Symbola" "Symbol")
              when (find-font (font-spec :name font))
              return (set-fontset-font t 'symbol (font-spec :family font) nil 'prepend))

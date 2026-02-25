@@ -43,11 +43,36 @@
 (use-package loaddefs
   :ensure nil
   :hook
-  (after-init . save-place-mode))
+  (after-init . save-place-mode)
+  (after-init . winner-mode))
 
 (use-package which-key
   :ensure nil
   :hook (after-init . which-key-mode))
+
+(use-package whitespace
+  :ensure nil
+  :hook ((prog-mode markdown-mode conf-mode) . whitespace-mode)
+  :config
+  (setq whitespace-style '(face trailing)))
+
+(use-package so-long
+  :ensure nil
+  :hook (after-init . global-so-long-mode))
+
+(use-package autorevert
+  :ensure nil
+  :hook (after-init . global-auto-revert-mode))
+
+(use-package prog-mode
+  :ensure nil
+  :hook (prog-mode . prettify-symbols-mode))
+
+(use-package isearch
+  :ensure nil
+  :config
+  (setq isearch-lazy-count t)
+  (setq lazy-count-prefix-format "%s/%s "))
 
 (use-package ibuffer
   :ensure nil
@@ -124,19 +149,33 @@
   :after evil
   :bind
   (:map evil-normal-state-map
-        ("gcc" . evilnc-comment-or-uncomment-lines))
-  (:map evil-visual-state-map
+        ("gcc" . evilnc-comment-or-uncomment-lines)
+        :map evil-visual-state-map
         ("gc" . evilnc-comment-or-uncomment-lines)))
+
+(use-package color-theme-sanityinc-tomorrow
+  :hook (after-init . (lambda () (load-theme 'sanityinc-tomorrow-bright t))))
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :config
-  (setq doom-modeline-height 15)
-  (setq doom-modeline-bar-width 5)
+  (setq doom-modeline-height 18)
+  (setq doom-modeline-bar-width 6)
   (setq doom-modeline-minor-modes t))
 
 (use-package minions
   :hook (doom-modeline-mode . minions-mode))
+
+(use-package hide-mode-line
+  :hook
+  ((eat-mode
+    eshell-mode
+    neotree-mode
+    completion-list-mode
+    dashboard-mode) . hide-mode-line-mode))
+
+(use-package solaire-mode
+  :hook (after-init . solaire-global-mode))
 
 (use-package indent-bars
   :hook ((python-mode yaml-mode) . indent-bars-mode)
@@ -182,6 +221,9 @@
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts t)
   (setq dashboard-icon-type 'nerd-icons))
+
+(use-package beacon
+  :hook (after-init . beacon-mode))
 
 (use-package nerd-icons-ibuffer
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
@@ -284,6 +326,17 @@
    :map minibuffer-local-map
    ("M-s" . consult-history)
    ("M-r" . consult-history)))
+
+(use-package embark
+  :bind
+  (("C-." . embark-act)
+   ("C-;" . embark-dwim))
+  :config
+  (define-key minibuffer-local-map (kbd "C-c C-e") 'embark-export))
+
+(use-package embark-consult
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 (use-package corfu
   :hook
@@ -431,6 +484,18 @@
 
 (use-package quickrun
   :commands quickrun)
+
+(use-package wgrep
+  :config
+  (setq wgrep-auto-save-buffer t))
+
+(use-package expand-region
+  :bind (("C-=" . er/expand-region)))
+
+(use-package neotree
+  :commands neotree-toggle
+  :config
+  (setq neo-theme 'nerd-icons))
 
 (use-package avy
   :bind
