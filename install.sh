@@ -64,17 +64,11 @@ main() {
 
 	os=$(detect_os)
 
-	# Terminal.app
-	if [ "$os" = "macOS" ]; then
-		defaults import com.apple.Terminal "$HOME/dot/AppleTerminal/com.apple.Terminal.plist"
-		echo "Terminal.app preferences imported."
-	fi
-
 	# Emacs
 	link_file "$dotdir/emacs/early-init.el" "$HOME/.config/emacs/early-init.el"
 	link_file "$dotdir/emacs/init.el" "$HOME/.config/emacs/init.el"
 
-  # kitty
+	# kitty
 	link_file "$dotdir/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
 
 	# Neovim
