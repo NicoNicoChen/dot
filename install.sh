@@ -74,6 +74,9 @@ main() {
 	link_file "$dotdir/emacs/early-init.el" "$HOME/.config/emacs/early-init.el"
 	link_file "$dotdir/emacs/init.el" "$HOME/.config/emacs/init.el"
 
+  # kitty
+	link_file "$dotdir/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+
 	# Neovim
 	link_file "$dotdir/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 
