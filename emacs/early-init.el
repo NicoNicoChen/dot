@@ -3,8 +3,8 @@
 ;;; Code:
 
 (when (or (featurep 'esup-child)
-	  (daemonp)
-	  noninteractive)
+	        (daemonp)
+	        noninteractive)
   (setq package-enable-at-startup nil))
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
@@ -39,6 +39,11 @@
 (when (featurep 'ns)
   (setq ns-command-modifier 'meta)
   (setq ns-alternate-modifier 'super))
+
+(add-hook 'window-setup-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 64 1024 1024))
+            (setq gc-cons-percentage 0.1)))
 
 (defun setup-fonts ()
   "Setup fonts."

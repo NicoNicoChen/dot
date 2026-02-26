@@ -8,6 +8,7 @@
   (use-package-always-ensure t)
   (use-package-always-defer t)
   (use-package-expand-minimally t)
+  (use-package-compute-statistics t)
   (use-package-enable-imenu-support t))
 
 (use-package package
@@ -28,7 +29,12 @@
 
 (use-package emacs
   :ensure nil
+  :hook
+  (minibuffer-setup . (lambda () (setq gc-cons-threshold most-positive-fixnum)))
+  (minibuffer-exit . (lambda () (setq gc-cons-threshold 800000)))
   :config
+  (setq read-process-output-max (* 3 1024 1024))
+  (setq process-adaptive-read-buffering nil)
   (setq-default tab-width 2))
 
 (use-package simple
@@ -59,6 +65,11 @@
 (use-package so-long
   :ensure nil
   :hook (after-init . global-so-long-mode))
+
+(use-package vc-hooks
+  :ensure nil
+  :config
+  (setq vc-handled-backends '(Git)))
 
 (use-package autorevert
   :ensure nil
@@ -438,6 +449,9 @@
 (use-package xclip
   :hook (after-init . xclip-mode))
 
+(use-package gcmh
+  :hook (after-init . gcmh-mode))
+
 (use-package markdown-mode)
 (use-package nix-mode)
 (use-package vimrc-mode)
@@ -457,13 +471,21 @@
 (use-package julia-mode)
 (use-package scala-mode)
 (use-package dart-mode)
+(use-package elixir-mode)
 (use-package powershell)
+
+(use-package pet
+  :hook (python-mode . pet-mode))
 
 (use-package lua-mode
   :config
   (setq lua-indent-level 2)
   (setq lua-indent-nested-block-content-align nil)
   (setq lua-indent-close-paren-align nil))
+
+(use-package direnv
+  :config
+  (after-init . direnv-mode))
 
 (use-package dape
   :commands dape)
