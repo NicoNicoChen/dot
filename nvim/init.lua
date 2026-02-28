@@ -1,4 +1,4 @@
--- OPTIONS --
+--- OPTIONS ---
 vim.opt.autowrite = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.cmdheight = 0
@@ -15,7 +15,7 @@ vim.opt.textwidth = 80
 vim.opt.virtualedit = "block"
 vim.opt.wrap = false
 
--- KEYBINDINGS --
+--- KEYBINDINGS ---
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to Left Window", remap = true })
@@ -24,7 +24,7 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to Upper Window", remap = tr
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to Right Window", remap = true })
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Back to Normal Mode", remap = true })
 
--- AUTOCMD --
+--- AUTOCMD ---
 vim.api.nvim_create_autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("highlight_yank", { clear = true }),
 	callback = function()
@@ -98,7 +98,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- LAZY.NVIM --
+--- LAZY.NVIM BOOTSTRAP ---
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"

@@ -1,4 +1,4 @@
-" OPTION
+""" OPTION """
 set autoread
 set autowrite
 set background=dark
@@ -14,8 +14,9 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set virtualedit=block
+set termguicolors
 
-" KEYBINDINGS
+""" KEYBINDINGS """
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
 nnoremap <C-h> <C-w>h
@@ -24,7 +25,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 imap jk <Esc>
 
-" AUTOCMD
+""" AUTOCMD """
 augroup disable_auto_comment
   autocmd!
   autocmd BufEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -42,7 +43,7 @@ augroup close_with_q
   autocmd FileType help,startuptime setlocal nobuflisted | nnoremap <buffer> <silent> q <Cmd>execute 'silent! close ' . nr2char(124) . ' silent! bdelete! ' . bufnr('%')<CR>
 augroup END
 
-" VIM-PLUG
+""" VIM-PLUG BOOTSTRAP """
 let data_dir = has('win32') || has('win64') ? '$HOME\vimfiles' : '~/.vim'
 if empty(glob(data_dir.'/autoload/plug.vim'))
   if has('win32') || has('win64')
