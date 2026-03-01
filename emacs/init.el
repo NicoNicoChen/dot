@@ -128,7 +128,26 @@
   :hook (after-init . evil-mode)
   :init
   (setq evil-want-integration t)
-  (setq evil-want-keybinding nil))
+  (setq evil-want-keybinding nil)
+  :config
+  (defun my/update-modeline-box (&rest _)
+    (unless (minibufferp)
+      (when (eq (window-buffer (selected-window)) (current-buffer))
+        (let*
+            ((face
+              (cond
+               ((evil-normal-state-p) 'doom-modeline-evil-normal-state)
+               ((evil-emacs-state-p) 'doom-modeline-evil-emacs-state)
+               ((evil-insert-state-p) 'doom-modeline-evil-insert-state)
+               ((evil-motion-state-p) 'doom-modeline-evil-motion-state)
+               ((evil-visual-state-p) 'doom-modeline-evil-visual-state)
+               ((evil-operator-state-p) 'doom-modeline-evil-operator-state)
+               ((evil-replace-state-p) 'doom-modeline-evil-replace-state)
+               (t 'doom-modeline-evil-user-state)))
+             (color (or (face-foreground face nil t) (face-foreground 'default))))
+          (set-face-attribute 'mode-line-active nil :box `(:line-width (-1 . -2) :color ,color))))))
+  (define-advice redisplay--pre-redisplay-functions (:around (orig arg) update-modeline-box) (funcall orig arg) (my/update-modeline-box))
+  (set-face-attribute 'mode-line-inactive nil :box `(:line-width (-1 . -2) :color ,(face-foreground 'vertical-border))))
 
 (use-package evil-leader
   :hook (evil-mode . global-evil-leader-mode)
@@ -160,10 +179,42 @@
   :after evil
   :bind
   (:map evil-normal-state-map
-        ("gcc" . evilnc-comment-or-uncomment-lines)
-        :map evil-visual-state-map
+        ("gcc" . evilnc-comment-or-uncomment-lines))
+  (:map evil-visual-state-map
         ("gc" . evilnc-comment-or-uncomment-lines)))
 
+(use-package doom-themes)
+(use-package immaterial-theme)
+(use-package catppuccin-theme)
+(use-package solarized-theme)
+(use-package ample-theme)
+(use-package monokai-theme)
+(use-package molokai-theme)
+(use-package gruvbox-theme)
+(use-package zenburn-theme)
+(use-package spacemacs-theme)
+(use-package spacegray-theme)
+(use-package minimal-theme)
+(use-package ef-themes)
+(use-package base16-theme)
+(use-package atom-one-dark-theme)
+(use-package atom-dark-theme)
+(use-package vscode-dark-plus-theme)
+(use-package vs-light-theme)
+(use-package vs-dark-theme)
+(use-package dracula-theme)
+(use-package eclipse-theme)
+(use-package moe-theme)
+(use-package ayu-theme)
+(use-package afternoon-theme)
+(use-package seoul256-theme)
+(use-package standard-themes)
+(use-package kanagawa-themes)
+(use-package material-theme)
+(use-package nord-theme)
+(use-package ample-theme)
+(use-package sublime-themes)
+(use-package color-theme-sanityinc-solarized)
 (use-package color-theme-sanityinc-tomorrow
   :hook (after-init . (lambda () (load-theme 'sanityinc-tomorrow-bright t))))
 
@@ -173,6 +224,9 @@
   (setq doom-modeline-height 18)
   (setq doom-modeline-bar-width 6)
   (setq doom-modeline-minor-modes t))
+
+(use-package mode-line-bell
+  :hook (doom-modeline-mode . mode-line-bell-mode))
 
 (use-package minions
   :hook (doom-modeline-mode . minions-mode))
@@ -471,6 +525,7 @@
 (use-package julia-mode)
 (use-package scala-mode)
 (use-package dart-mode)
+(use-package ess)
 (use-package elixir-mode)
 (use-package powershell)
 
