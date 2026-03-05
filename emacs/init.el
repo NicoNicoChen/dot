@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+;;; BUILTIN ;;;
 (use-package use-package
   :ensure nil
   :custom
@@ -33,6 +34,8 @@
   (minibuffer-setup . (lambda () (setq gc-cons-threshold most-positive-fixnum)))
   (minibuffer-exit . (lambda () (setq gc-cons-threshold 800000)))
   :config
+  (setq-default truncate-lines t)
+  (setq treesit-extra-load-path (list (expand-file-name "treesit-grammer" user-emacs-directory)))
   (setq read-process-output-max (* 3 1024 1024))
   (setq process-adaptive-read-buffering nil)
   (setq-default tab-width 2))
@@ -123,6 +126,93 @@
   (("M-n" . flymake-goto-next-error)
    ("C-c f" . flymake-show-buffer-diagnostics)
    ("M-p" . flymake-goto-prev-error)))
+
+(use-package treesit
+  :ensure nil
+  :demand t
+  :config
+  (setq treesit--install-language-grammar-out-dir-history treesit-extra-load-path)
+  (setq treesit-language-source-alist
+        '((bash . ("https://github.com/tree-sitter/tree-sitter-bash"))
+          (c . ("https://github.com/tree-sitter/tree-sitter-c"))
+          (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+          (css . ("https://github.com/tree-sitter/tree-sitter-css"))
+          (cmake . ("https://github.com/uyha/tree-sitter-cmake"))
+          (csharp . ("https://github.com/tree-sitter/tree-sitter-c-sharp.git"))
+          (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
+          (elisp . ("https://github.com/Wilfred/tree-sitter-elisp"))
+          (elixir "https://github.com/elixir-lang/tree-sitter-elixir" "main" "src" nil nil)
+          (go . ("https://github.com/tree-sitter/tree-sitter-go"))
+          (gomod . ("https://github.com/camdencheek/tree-sitter-go-mod.git"))
+          (haskell "https://github.com/tree-sitter/tree-sitter-haskell" "master" "src" nil nil)
+          (html . ("https://github.com/tree-sitter/tree-sitter-html"))
+          (java . ("https://github.com/tree-sitter/tree-sitter-java.git"))
+          (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+          (json . ("https://github.com/tree-sitter/tree-sitter-json"))
+          (lua . ("https://github.com/Azganoth/tree-sitter-lua"))
+          (make . ("https://github.com/alemuller/tree-sitter-make"))
+          (markdown . ("https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown/src"))
+          (markdown-inline . ("https://github.com/tree-sitter-grammars/tree-sitter-markdown" "split_parser" "tree-sitter-markdown-inline/src"))
+          (ocaml . ("https://github.com/tree-sitter/tree-sitter-ocaml" nil "ocaml/src"))
+          (org . ("https://github.com/milisims/tree-sitter-org"))
+          (python . ("https://github.com/tree-sitter/tree-sitter-python"))
+          (php . ("https://github.com/tree-sitter/tree-sitter-php"))
+          (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
+          (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
+          (ruby . ("https://github.com/tree-sitter/tree-sitter-ruby"))
+          (rust . ("https://github.com/tree-sitter/tree-sitter-rust"))
+          (sql . ("https://github.com/m-novikov/tree-sitter-sql"))
+          (scala "https://github.com/tree-sitter/tree-sitter-scala" "master" "src" nil nil)
+          (toml "https://github.com/tree-sitter/tree-sitter-toml" "master" "src" nil nil)
+          (vue . ("https://github.com/merico-dev/tree-sitter-vue"))
+          (kotlin . ("https://github.com/fwcd/tree-sitter-kotlin"))
+          (yaml . ("https://github.com/ikatyang/tree-sitter-yaml"))
+          (zig . ("https://github.com/GrayJack/tree-sitter-zig"))
+          (clojure . ("https://github.com/sogaiu/tree-sitter-clojure"))
+          (nix . ("https://github.com/nix-community/nix-ts-mode"))
+          (mojo . ("https://github.com/HerringtonDarkholme/tree-sitter-mojo")))))
+
+(use-package cc-vars
+  :ensure nil
+  :hook
+  (c-mode . c-ts-mode)
+  (c++-mode . c++-ts-mode))
+
+(use-package cc-mode
+  :ensure nil
+  :hook (java-mode . java-ts-mode))
+
+(use-package css-mode
+  :ensure nil
+  :hook (css-mode . css-ts-mode))
+
+(use-package js
+  :ensure nil
+  :hook
+  (js-mode . js-ts-mode)
+  (js-json-mode . json-ts-mode))
+
+(use-package python
+  :ensure nil
+  :hook (python-mode . python-ts-mode))
+
+(use-package sh-script
+  :ensure nil
+  :hook (sh-mode . bash-ts-mode))
+
+(use-package ruby-mode
+  :ensure nil
+  :hook (ruby-mode . (lambda () (treesit-parser-create 'ruby))))
+
+(use-package elisp-mode
+  :ensure nil
+  :hook (emacs-lisp-mode . (lambda () (treesit-parser-create 'elisp))))
+
+(use-package ielm
+  :ensure nil
+  :hook (ielm-mode . (lambda () (treesit-parser-create 'elisp))))
+
+;;; ELPA/MELPA ;;;
 
 (use-package evil
   :hook (after-init . evil-mode)
@@ -506,31 +596,76 @@
 (use-package gcmh
   :hook (after-init . gcmh-mode))
 
-(use-package markdown-mode)
 (use-package nix-mode)
 (use-package vimrc-mode)
-(use-package web-mode)
 (use-package yaml-mode)
 (use-package csv-mode)
-(use-package json-mode)
-(use-package toml-mode)
-(use-package rust-mode)
-(use-package go-mode)
-(use-package haskell-mode)
-(use-package clojure-mode)
 (use-package emmet-mode)
-(use-package typescript-mode)
 (use-package scss-mode)
-(use-package cmake-mode)
 (use-package julia-mode)
 (use-package scala-mode)
 (use-package dart-mode)
 (use-package ess)
 (use-package elixir-mode)
 (use-package powershell)
+(use-package lsp-mode)
+(use-package dap-mode)
 
 (use-package pet
   :hook (python-mode . pet-mode))
+
+(use-package haskell-mode
+  :hook (haskell-mode . (lambda () (treesit-parser-create 'haskell))))
+
+(use-package kotlin-mode
+  :hook (kotlin-mode . (lambda () (treesit-parser-create 'kotlin))))
+
+(use-package go-mode
+  :hook (go-mode . go-ts-mode))
+
+(use-package json-mode
+  :hook (json-mode . (lambda () (treesit-parser-create 'json))))
+
+(use-package zig-mode
+  :hook
+  (zig-mode . (lambda () (treesit-parser-create 'zig))))
+
+(use-package web-mode
+  :hook
+  (web-mode . (lambda ()
+                (let ((file-name (buffer-file-name)))
+                  (when file-name
+                    (treesit-parser-create
+                     (pcase (file-name-extension file-name)
+                       ("vue" 'vue)
+                       ("html" 'html)
+                       ("php" 'php))))))))
+
+(use-package markdown-mode
+  :hook (markdown-mode . markdown-ts-mode))
+
+(use-package clojure-mode
+  :hook (clojure-mode . clojure-ts-mode))
+
+(use-package cider
+  :hook (cider-repl-mode-hook . (lambda () (treesit-parser-create 'clojure))))
+
+(use-package rust-mode
+  :hook (rust-mode . rust-ts-mode))
+
+(use-package php-mode
+  :hook (php-mode . (lambda () (treesit-parser-create 'php))))
+
+(use-package typescript-mode
+  :hook (typescript-mode . typescript-ts-mode))
+
+(use-package toml-mode
+  :hook
+  (toml-mode . toml-ts-mode)
+  (conf-toml-mode . toml-ts-mode))
+
+(use-package cmake-mode
+  :hook (cmake-mode . cmake-ts-mode))
 
 (use-package lua-mode
   :config
