@@ -329,6 +329,7 @@
     eshell-mode
     neotree-mode
     completion-list-mode
+    symbols-outline-mode
     dashboard-mode) . hide-mode-line-mode))
 
 (use-package solaire-mode
@@ -689,6 +690,23 @@
 
 (use-package eat
   :commands eat)
+
+(use-package minimap
+  :commands minimap-mode)
+
+(use-package symbols-outline
+  :commands symbols-outline-show
+  :hook
+  ((eglot-managed-mode lsp-mode) . (lambda () (setq-local symbols-outline-fetch-fn #'symbols-outline-lsp-fetch)))
+  :config
+  (setq symbols-outline-window-position 'right)
+  (symbols-outline-follow-mode))
+
+(use-package eldoc-mouse
+  :hook
+  ((emacs-lisp-mode eglot-managed-mode) . eldoc-mouse-mode)
+  :config
+  (setq eldoc-mouse-idle-time 0.5))
 
 (use-package magit
   :commands magit)
