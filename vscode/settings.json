@@ -186,7 +186,7 @@
   "catppuccin.italicComments": true,
   "catppuccin.italicKeywords": true,
   "catppuccin.boldKeywords": true,
-  "catppuccin.bracketMode": "dimmed",
+  "catppuccin.bracketMode": "rainbow",
   "catppuccin.workbenchMode": "minimal",
   "catppuccin.colorOverrides": {
     "mocha": {
@@ -197,10 +197,10 @@
   },
   "catppuccin.customUIColors": {
     "mocha": {
-      "statusBar.foreground": "accent",
       "widget.border": "accent",
       "editorLineNumber.activeForeground": "green",
       "editorLineNumber.foreground": "surface1",
+      "editorCursor.foreground": "red",
     },
   },
   "catppuccin.extraBordersEnabled": true,
