@@ -39,6 +39,9 @@
 (when (featurep 'ns)
   (setq ns-command-modifier 'meta)
   (setq ns-alternate-modifier 'super))
+(when (eq system-type 'windows-nt)
+  (setq load-suffixes '(".elc" ".el"))
+  (setq load-file-rep-suffixes '("")))
 
 (add-hook 'window-setup-hook
           (lambda ()
