@@ -64,6 +64,13 @@ augroup END
 
 call plug#begin()
 
+Plug 'ryanoasis/vim-devicons', { 'on': [] }
+augroup load_devicons
+  autocmd!
+  autocmd BufReadPost * call plug#load('vim-devicons')
+        \| autocmd! load_devicons
+augroup END
+
 Plug 'morhetz/gruvbox', { 'on': [] }
 augroup load_gruvbox
   autocmd!
@@ -88,5 +95,40 @@ augroup load_highlightedyank
         \| autocmd! load_highlightedyank
         \| let g:highlightedyank_highlight_duration = 1000
 augroup END
+
+Plug 'airblade/vim-gitgutter', { 'on': [] }
+augroup load_vim_gitgutter
+  autocmd!
+  autocmd BufReadPost * call plug#load('vim-gitgutter')
+        \| autocmd! load_vim_gitgutter
+        \| GitGutterEnable
+augroup END
+
+Plug 'tpope/vim-commentary', { 'on': [] }
+augroup load_vim_commentary
+  autocmd!
+  autocmd BufReadPost * call plug#load('vim-commentary')
+        \| autocmd! load_vim_commentary
+augroup END
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+nnoremap <leader>ff :Files<CR>
+nnoremap <C-x><C-f> :Files<CR>
+nnoremap <leader>fF :Files ~/<CR>
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <C-x><C-b> :Buffers<CR>
+nnoremap <leader>fc :Colors<CR>
+nnoremap <leader>fs :BLines<CR>
+nnoremap <C-x><C-s> :BLines<CR>
+nnoremap <leader>fS :Lines<CR>
+nnoremap <leader>fw :Windows<CR>
+nnoremap <leader>fr :History<CR>
+nnoremap <leader><leader><Leader> :Commands<CR>
+
+Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle'] }
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle'] }
+Plug 'liuchengxu/nerdtree-dash', { 'on': ['NERDTreeToggle'] }
+nnoremap <leader>fn :NERDTreeToggle<CR>
 
 call plug#end()
