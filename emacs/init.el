@@ -130,6 +130,8 @@
 (use-package treesit
   :ensure nil
   :demand t
+  :when (and (fboundp 'treesit-available-p)
+             (treesit-available-p))
   :config
   (setq treesit--install-language-grammar-out-dir-history treesit-extra-load-path)
   (setq treesit-language-source-alist
@@ -724,3 +726,4 @@
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 ;;; init.el ends here
+
