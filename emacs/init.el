@@ -743,5 +743,9 @@
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
+(use-package mason
+  :config
+  (mason-setup))
+
 ;;; init.el ends here
 
