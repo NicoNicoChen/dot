@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, username, ... }:
 {
   nix = {
     enable = true;
@@ -50,7 +50,7 @@
         TrackpadThreeFingerDrag = true;
       };
     };
-    primaryUser = "cya";
+    primaryUser = username;
     stateVersion = 5;
     activationScripts.extraActivation.text = ''
       softwareupdate --install-rosetta --agree-to-license
@@ -58,6 +58,7 @@
   };
   environment = {
     systemPackages = with pkgs; [
+      just
       nixfmt
     ];
   };

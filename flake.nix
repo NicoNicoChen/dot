@@ -41,52 +41,25 @@
       home-manager,
       ...
     }:
+    let
+      lib = import ./lib { inherit inputs; };
+    in
     {
       darwinConfigurations = {
-        "cya" = nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./darwin/common.nix
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = true;
-                user = "cya";
-                autoMigrate = true;
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                };
-                mutableTaps = false;
-              };
-            }
-          ];
-        };
+        "cya" = lib.mkDarwinConfig { username = "cya"; };
       };
       homeConfigurations = {
-        "cya" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "aarch64-darwin";
-            config.allowUnfreePredicate =
-              pkg:
-              builtins.elem (nixpkgs.lib.getName pkg) [
-                "vscode"
-                "vscode-extension-MS-python-vscode-pylance"
-              ];
-          };
-          extraSpecialArgs = { inherit inputs; };
-          modules = [
-            ./home-manager/default.nix
-          ];
-        };
+        "cya" = lib.mkHomeConfig { username = "cya"; };
       };
-      devShells = {
-        "aarch64-darwin" = {
-          python = import ./shell/python.nix { pkgs = nixpkgs.legacyPackages."aarch64-darwin"; };
-          r = import ./shell/r.nix { pkgs = nixpkgs.legacyPackages."aarch64-darwin"; };
-        };
-      };
+      devShells = lib.forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          python = import ./shell/python.nix { inherit pkgs; };
+          r = import ./shell/r.nix { inherit pkgs; };
+        }
+      );
     };
 }

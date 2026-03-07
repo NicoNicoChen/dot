@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
   imports = [
     ./home.nix
@@ -17,8 +17,8 @@
     ./zsh.nix
   ];
   home = {
-    username = "cya";
-    homeDirectory = if pkgs.stdenv.isDarwin then "/Users/cya" else "/home/cya";
+    username = username;
+    homeDirectory = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
     packages = with pkgs; [ ];
     stateVersion = "25.11";
   };
