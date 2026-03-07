@@ -16,15 +16,15 @@ install_hm:
   nix-channel --update
   nix-shell '<home-manager>' -A install
 
-# deploy home-manager config
+# Deploy home-manager config
 hm name:
   nix run --extra-experimental-features "nix-command flakes" home-manager -- switch -b backup --flake ~/dot#{{name}}
 
-# update flake
+# Update flake
 up:
   nix flake update
 
-# clean garbage
+# Clean garbage
 clean:
   nix-collect-garbage -d
 
