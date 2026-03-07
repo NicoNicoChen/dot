@@ -1,4 +1,9 @@
-{ pkgs, config, username, ... }:
+{
+  pkgs,
+  config,
+  username,
+  ...
+}:
 {
   nix = {
     enable = true;
