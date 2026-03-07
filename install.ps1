@@ -59,21 +59,21 @@ function Main {
     $LinkMap = @{
 
         # Emacs
-        (Join-Path (Join-Path $DotDir "emacs") "early-init.el") = (Join-Path (Join-Path $env:APPDATA ".emacs.d") "early-init.el")
-        (Join-Path (Join-Path $DotDir "emacs") "init.el") = (Join-Path (Join-Path $env:APPDATA ".emacs.d") "init.el")
+        (Join-Path (Join-Path (Join-Path $DotDir "config") "emacs") "early-init.el") = (Join-Path (Join-Path $env:APPDATA ".emacs.d") "early-init.el")
+        (Join-Path (Join-Path (Join-Path $DotDir "config") "emacs") "init.el") = (Join-Path (Join-Path $env:APPDATA ".emacs.d") "init.el")
 
         # Neovim
-        (Join-Path (Join-Path $DotDir "nvim") "init.lua") = (Join-Path (Join-Path $env:LOCALAPPDATA "nvim") "init.lua")
+        (Join-Path (Join-Path (Join-Path $DotDir "config") "nvim") "init.lua") = (Join-Path (Join-Path $env:LOCALAPPDATA "nvim") "init.lua")
 
         # Vim
-        (Join-Path (Join-Path $DotDir "vim") "init.vim") = (Join-Path (Join-Path $env:USERPROFILE "vimfiles") "vimrc")
+        (Join-Path (Join-Path (Join-Path $DotDir "config") "vim") "init.vim") = (Join-Path (Join-Path $env:USERPROFILE "vimfiles") "vimrc")
 
         # VSCode
-        (Join-Path (Join-Path $DotDir "vscode") "settings.json") = (Join-Path (Join-Path (Join-Path $env:APPDATA "Code") "User") "settings.json")
-        (Join-Path (Join-Path $DotDir "vscode") "keybindings.json") = (Join-Path (Join-Path (Join-Path $env:APPDATA "Code") "User") "keybindings.json")
-	
+        (Join-Path (Join-Path (Join-Path $DotDir "config") "vscode") "settings.json") = (Join-Path (Join-Path (Join-Path $env:APPDATA "Code") "User") "settings.json")
+        (Join-Path (Join-Path (Join-Path $DotDir "config") "vscode") "keybindings.json") = (Join-Path (Join-Path (Join-Path $env:APPDATA "Code") "User") "keybindings.json")
+
         # wt
-        (Join-Path (Join-Path $DotDir "wt") "settings.json") = (Join-Path (Join-Path (Join-Path (Join-Path $env:LOCALAPPDATA "Packages") "Microsoft.WindowsTerminal_8wekyb3d8bbwe") "LocalState") "settings.json")
+        (Join-Path (Join-Path (Join-Path $DotDir "config") "wt") "settings.json") = (Join-Path (Join-Path (Join-Path (Join-Path $env:LOCALAPPDATA "Packages") "Microsoft.WindowsTerminal_8wekyb3d8bbwe") "LocalState") "settings.json")
 
     }
 

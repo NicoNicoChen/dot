@@ -5,86 +5,86 @@ set -eu
 dotdir=$(cd "$(dirname "$0")" && pwd)
 
 detect_os() {
-	detected_os="Unknown"
-	if uname -r | grep -q -i "microsoft"; then
-		detected_os="WSL"
-	elif [ -f /proc/version ] && grep -q -i "microsoft" /proc/version; then
-		detected_os="WSL"
-	else
-		case "$(uname -s)" in
-		Linux)
-			detected_os="Linux"
-			;;
-		Darwin)
-			detected_os="macOS"
-			;;
-		*BSD)
-			detected_os="BSD"
-			;;
-		esac
-	fi
-	echo "$detected_os"
+	  detected_os="Unknown"
+	  if uname -r | grep -q -i "microsoft"; then
+		    detected_os="WSL"
+	  elif [ -f /proc/version ] && grep -q -i "microsoft" /proc/version; then
+		    detected_os="WSL"
+	  else
+		    case "$(uname -s)" in
+		        Linux)
+			          detected_os="Linux"
+			          ;;
+		        Darwin)
+			          detected_os="macOS"
+			          ;;
+		        *BSD)
+			          detected_os="BSD"
+			          ;;
+		    esac
+	  fi
+	  echo "$detected_os"
 }
 
 link_file() {
-	source=$1
-	destination=$2
+	  source=$1
+	  destination=$2
 
-	# Source file existence checking
-	if [ ! -e "$source" ]; then
-		echo "$source not found, skipping: $source" >&2
-		return 0
-	fi
+	  # Source file existence checking
+	  if [ ! -e "$source" ]; then
+		    echo "$source not found, skipping: $source" >&2
+		    return 0
+	  fi
 
-	# Parent directory existence checking
-	mkdir -p "$(dirname "$destination")"
+	  # Parent directory existence checking
+	  mkdir -p "$(dirname "$destination")"
 
-	# If the destination path is already occupied, back up
-	# the existing item unless it is already the correct symbolic link.
-	if [ -L "$destination" ]; then
-		current_target=$(readlink "$destination")
-		if [ "$current_target" = "$source" ]; then
-			echo "$destination is already linked to the correct file."
-			return 0
-		fi
-	fi
-	if [ -e "$destination" ] && [ ! -L "$destination" ]; then
-		timestamp=$(date +'%Y%m%d-%H%M%S')
-		backup="${destination}.bak.${timestamp}"
-		echo "Backup: $destination -> $backup"
-		mv "$destination" "$backup"
-	fi
+	  # If the destination path is already occupied, back up
+	  # the existing item unless it is already the correct symbolic link.
+	  if [ -L "$destination" ]; then
+		    current_target=$(readlink "$destination")
+		    if [ "$current_target" = "$source" ]; then
+			      echo "$destination is already linked to the correct file."
+			      return 0
+		    fi
+	  fi
+	  if [ -e "$destination" ] && [ ! -L "$destination" ]; then
+		    timestamp=$(date +'%Y%m%d-%H%M%S')
+		    backup="${destination}.bak.${timestamp}"
+		    echo "Backup: $destination -> $backup"
+		    mv "$destination" "$backup"
+	  fi
 
-	# Softlink creating
-	echo "Link $destination -> $source"
-	ln -snf "$source" "$destination"
+	  # Softlink creating
+	  echo "Link $destination -> $source"
+	  ln -snf "$source" "$destination"
 }
 
 main() {
 
-	os=$(detect_os)
+	  os=$(detect_os)
 
-	# Emacs
-	link_file "$dotdir/emacs/early-init.el" "$HOME/.config/emacs/early-init.el"
-	link_file "$dotdir/emacs/init.el" "$HOME/.config/emacs/init.el"
+	  # Emacs
+	  link_file "$dotdir/config/emacs/early-init.el" "$HOME/.config/emacs/early-init.el"
+	  link_file "$dotdir/config/emacs/init.el" "$HOME/.config/emacs/init.el"
 
-	# kitty
-	link_file "$dotdir/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+	  # kitty
+	  link_file "$dotdir/config/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
 
-	# Neovim
-	link_file "$dotdir/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+	  # Neovim
+	  link_file "$dotdir/config/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 
-	# Vim
-	link_file "$dotdir/vim/init.vim" "$HOME/.vim/vimrc"
+	  # Vim
+	  link_file "$dotdir/config/vim/init.vim" "$HOME/.vim/vimrc"
 
-	# VSCode
-	if [ "$os" = "macOS" ]; then
-		link_file "$dotdir/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
-		link_file "$dotdir/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
-	else
-		link_file "$dotdir/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
-		link_file "$dotdir/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
-	fi
+	  # VSCode
+	  if [ "$os" = "macOS" ]; then
+		    link_file "$dotdir/config/vscode/settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+		    link_file "$dotdir/config/vscode/keybindings.json" "$HOME/Library/Application Support/Code/User/keybindings.json"
+	  else
+		    link_file "$dotdir/config/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
+		    link_file "$dotdir/config/vscode/keybindings.json" "$HOME/.config/Code/User/keybindings.json"
+	  fi
 
 }
 
