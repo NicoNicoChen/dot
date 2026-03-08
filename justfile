@@ -2,6 +2,10 @@
 default:
   @just --list
 
+# Deploy NixOS
+build_nix name:
+  sudo nixos-rebuild switch --flake ~/dot#{{name}}
+
 # Install nix-darwin
 install_darwin name:
   sudo nix run --extra-experimental-features "nix-command flakes" nix-darwin -- switch --flake ~/dot#{{name}}

@@ -30,7 +30,7 @@ in
       specialArgs = { inherit inputs username hostname; };
       modules = [
         ../nixos/${hostname}/default.nix
-        ../nixos/${hostname}/hardware.nix
+        ../nixos/${hostname}/hardware-configuration.nix
       ];
     };
 
