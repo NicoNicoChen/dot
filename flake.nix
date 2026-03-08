@@ -45,6 +45,13 @@
       lib = import ./lib { inherit inputs; };
     in
     {
+      nixosConfigurations = {
+        "cya" = lib.mkNixosConfig {
+          hostname = "vm";
+          username = "cya";
+          system = "x86_64-linux";
+        };
+      };
       darwinConfigurations = {
         "cya" = lib.mkDarwinConfig { username = "cya"; };
       };

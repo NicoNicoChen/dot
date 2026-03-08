@@ -18,6 +18,22 @@ in
     "x86_64-linux"
   ];
 
+  # Generate NixOS config
+  mkNixosConfig =
+    {
+      hostname,
+      username,
+      system ? "x86_64-linux",
+    }:
+    nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = { inherit inputs username hostname; };
+      modules = [
+        ../nixos/${hostname}/default.nix
+        ../nixos/${hostname}/hardware.nix
+      ];
+    };
+
   # Generate nix-darwin config
   mkDarwinConfig =
     {
